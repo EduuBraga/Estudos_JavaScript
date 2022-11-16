@@ -1,0 +1,37 @@
+*{
+  box-sizing: border-box;
+}
+
+body{
+  background-color: #ededed;
+}
+
+h1{
+  text-align: center;
+}
+
+.signup-form{
+  padding: 10px;
+  background-color: #fff;
+  margin: 0 auto;
+  max-width: 300px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.signup-form input{
+  outline: none;
+}
+
+.feedback{
+  display: none;
+}
+
+.success{
+  border: 2px solid #00ff00;
+}
+
+.error{
+  border: 2px solid #ff0000;
+}
