@@ -46,9 +46,9 @@ const calculateUserScore = userAnswers => {
 const toggleColorQtyCorrectAnswer = () => {
   let classes = [
     'text-danger',
-    'text-danger',
     'text-warning',
     'text-warning',
+    'text-success',
     'text-success',
     'text-primary'
   ];
@@ -91,7 +91,7 @@ form.addEventListener('submit', event => {
   // calcula a pontuação do usuário
   calculateUserScore(userAnswers);
 
-  // muda a cor da quantidade de respostas certas
+  // muda a cor da quantidade de respostas certas do usuário
   toggleColorQtyCorrectAnswer()
 
   // exibe a pontuação final
