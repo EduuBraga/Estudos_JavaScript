@@ -1,7 +1,7 @@
 const form = document.querySelector('form');
 const containerFinalScore = document.querySelector('.container_final_score');
 const finalScore = document.querySelector('.final_score');
-const qtyAnswersCorrectScore = document.querySelector('.qty_final_score');
+const qtyAnswersCorrectFinalScore = document.querySelector('.qty_final_score');
 
 let correctAnswers = ['A', 'B', 'C', 'B', 'A', 'C'];
 let score = 0;
@@ -36,7 +36,7 @@ const calculateUserScore = userAnswers => {
 
     if (isCorrectUserAnswer) {
       score += 17;
-      qtyAnswersCorrectScore.textContent = qtyUserCorrectAnswers += 1
+      qtyAnswersCorrectFinalScore.textContent = qtyUserCorrectAnswers += 1
 
       if (score > 100) { score = 100; }
     }
@@ -54,13 +54,13 @@ const toggleColorQtyCorrectAnswer = () => {
   ];
 
   classes.forEach(className => {
-    qtyAnswersCorrectScore.classList.remove(className);
+    qtyAnswersCorrectFinalScore.classList.remove(className);
   });
 
   let indexClassToElement = qtyUserCorrectAnswers - 1;
   let classToElement = classes[indexClassToElement];
 
-  qtyAnswersCorrectScore.classList.add(classToElement);
+  qtyAnswersCorrectFinalScore.classList.add(classToElement);
 }
 
 const showFinalScore = () => {
