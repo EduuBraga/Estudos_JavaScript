@@ -6,15 +6,10 @@
 */
 
 const randomNumbers = [10, 30, 15, 25, 50, 40, 5]
-let numbersOdd = []
 
-randomNumbers.forEach(number => {
-  if (number % 2 === 1) {
-    numbersOdd.push(number)
-  }
-})
+const oddNumbers = randomNumbers.filter(number => number % 2 === 1)
 
-console.log(numbersOdd)
+console.log(oddNumbers)
 
 /*
   02
@@ -23,15 +18,10 @@ console.log(numbersOdd)
 */
 
 const crazyNumbers = [937, 5, 395, 402, 501, 333, 502, 781, 3, 691]
-let counter = 0
 
-crazyNumbers.forEach(number => {
-  if (number < 501) {
-    counter++
-  }
-})
+const down501 = crazyNumbers.filter(number => number < 501)
 
-console.log(counter)
+console.log(down501.length)
 
 /*
   03
@@ -41,14 +31,10 @@ console.log(counter)
 */
 
 const numbers = [5, 7, 3]
-let numbersSquared = []
 
-numbers.forEach(number => {
-  numbersSquared.push(number ** 2)
-})
+const numbersSquared = numbers.map(item => item ** 2)
 
 console.log(numbersSquared)
-
 
 /*
   04
@@ -69,13 +55,9 @@ const cart = [
   { name: 'Death Stranding', price: 149.99 }
 ]
 
-let list = ""
+const productsOfTheCart = cart.map(product => `- ${product.name} \n`)
 
-cart.forEach(({ name }, index) => {
-  list += `  - ${name} ${index + 1} \n`
-})
-
-console.log(list)
+console.log(productsOfTheCart)
 
 /*
   - Nome 1
@@ -104,13 +86,9 @@ const tarantinoMovies = [
   { name: 'Kill Bill: Volume 1', release: 2003 }
 ]
 
-let Movies2000more = []
+const before2000 = tarantinoMovies.filter(movie => movie.release < 2000)
 
-tarantinoMovies.forEach(movie => {
-  if (movie.release < 2000) Movies2000more.push(movie)
-})
-
-console.log(Movies2000more)
+console.log(before2000)
 
 /*
   06
@@ -129,13 +107,7 @@ const tvShows = [
   { name: 'Watchmen', releaseYear: 2019 }
 ]
 
-let namesTvshows = []
-
-tvShows.forEach(({name}) => {
-  namesTvshows.push(name)
-})
-
-console.log(namesTvshows)
+const namesTvShows = tvShows.map(show => show.name)
 
 /*
   07
