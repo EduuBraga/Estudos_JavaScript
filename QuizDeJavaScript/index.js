@@ -10,10 +10,10 @@ let qtyUserCorrectAnswers = 0;
 const GetUserAnswers = () => {
   let userAnswers = [];
 
-  correctAnswers.forEach((_, index) => {
-    let userAnswer = form[`inputQuestion${index + 1}`].value;
+  for (let index in correctAnswers){
+    let userAnswer = form[`inputQuestion${++index}`].value;
     userAnswers.push(userAnswer);
-  })
+  }
 
   return userAnswers;
 }
@@ -39,6 +39,11 @@ const calculateUserScore = userAnswers => {
       qtyAnswersCorrectFinalScore.textContent = qtyUserCorrectAnswers += 1
 
       if (score > 100) { score = 100; }
+    }
+    else {
+      let incorrectAnswer = document.querySelector(`.container-question${++index}`)
+      incorrectAnswer.classList.add('border-danger')
+      incorrectAnswer.classList.add('border')
     }
   });
 }
@@ -79,8 +84,20 @@ const cleanScores = () => {
   }
 }
 
+const removeClassesIncorrectAnswers = () => {
+  let incorrectAnswer = document.querySelectorAll('.border-danger')
+
+  incorrectAnswer.forEach(answer => {
+    answer.classList.remove('border')
+    answer.classList.remove('border-danger')
+  })
+}
+
 form.addEventListener('submit', event => {
   event.preventDefault();
+
+  // Remove os feedback de resposta incorretas
+  removeClassesIncorrectAnswers()
 
   // Limpando pontuação
   cleanScores();
