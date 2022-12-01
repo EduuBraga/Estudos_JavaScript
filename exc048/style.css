@@ -71,3 +71,7 @@ form button{
 .result strong{
   color: #303030;
 }
+
+.error{
+  color: #ff0000;
+}
