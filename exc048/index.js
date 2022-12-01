@@ -78,20 +78,39 @@ const showFeedbackError = msg => {
   result.innerHTML = templateError
 }
 
-const removeItens = () => {
+const removeFeedback = () => {
+  result.style = 'display: none;'
+
   const itensResult = document.querySelectorAll('.itens-result')
   if (itensResult) { itensResult.forEach(item => item.remove()) }
 
   const error = document.querySelector('.error')
   if (error) { error.remove() }
+
+  const inputsErros = document.querySelectorAll('.feedback-error')
+  if (inputsErros) {
+    inputsErros.forEach(input => input.classList.remove('feedback-error'))
+  }
+}
+
+const feedbackErrorInput = () => {
+  let inputs = document.querySelectorAll('.input')
+
+  inputs.forEach(input => {
+    let value = input.value
+
+    if (value === '') {
+      input.classList.add('feedback-error')
+    }
+  })
 }
 
 form.addEventListener('submit', event => {
   event.preventDefault();
   const presentDate = new Date();
 
-  //Removendo itens caso já existentes
-  removeItens()
+  //Removendo feedback caso já existentes
+  removeFeedback()
 
   //Pegando data passada nos inputs
   const dateOfInput = gettingDateOfInput()
@@ -100,9 +119,8 @@ form.addEventListener('submit', event => {
   let differenceInDates = null
 
   if (dateOfInput === 'error') {
-    showFeedbackError("Preencha os campos")
-  }
-  else {
+    feedbackErrorInput()
+  } else {
     const differenc = presentDate.getTime() - dateOfInput.getTime()
     differenceInDates = handleDifferenceDate(differenc)
   }
