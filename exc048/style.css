@@ -15,19 +15,48 @@ header{
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 8px;
-  padding: 16px;
+  gap: 40px;
+  padding: 24px 24px 16px 24px;
+}
+
+header > div > p{
+  font-size: 18px;
+  margin-top: 4px;
+}
+
+header > p{
+  color: #a5a5a5;
 }
 
 form{
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 8px;
+  gap: 20px;
 }
 
-form input{
+.container-inputs{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 16px;
+  width: 400px;
+}
+
+.container-inputs div{
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 8px;
+}
+.container-inputs div label{
+  color: #a5a5a5;
+}
+
+.input{
+  width: 350px;
   background-color: #f3f2f1;
+  text-align: left;
   color: #303030;
   padding: 8px 12px;
   border: none;
@@ -35,22 +64,28 @@ form input{
 }
 
 form button{
-  padding: 8px 12px;
+  padding: 16px 20px;
   border: none;
   color: #f2f3f1;
-  background-color: #2020a8;
+  background-color: #1313c2;
   cursor: pointer;
-  border-radius: 8px;
+  border-radius: 32px;
+  font-size: 16px;
+}
+
+.container-result{
+  margin: 32px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 .result{
   display: none;
   flex-direction: column;
   align-items: flex-start;
-  width: max-content;
   margin: 0 auto;
-  margin-top: 32px;
-  margin-bottom: 32px;
+  max-width: 450px;
   border-radius: 8px;
   padding: 12px;
   gap: 4px;
