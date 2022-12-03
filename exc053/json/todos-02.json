@@ -1,0 +1,14 @@
+[
+  {
+    "myKey": "Obj 1",
+    "myKey2": true
+  },
+  {
+    "myKey": "Obj 2",
+    "myKey2": 23
+  },
+  {
+    "myKey": "Obj 3",
+    "myKey2": null
+  }
+]
