@@ -35,36 +35,28 @@ const getPokemon = (url, callback) => {
   request.send()
 }
 
-getPokemon('https://pokeapi.co/api/v2/pokemon/bulbasaur', (error, data) => {
-  if (error) {
-    console.log(error)
-    return
-  }
+const logResquestPokemon = (error, data) => error
+  ? console.log(error)
+  : console.log(`Pokémon obtido: ${data.name}`)
 
-  console.log(`Pokémon obtido: ${data.name}`)
-  getPokemon('https://pokeapi.co/api/v2/pokemon/charmander', (error, data) => {
-    if (error) {
-      console.log(error)
-      return
-    }
+const getPokemonURL = id => `https://pokeapi.co/api/v2/pokemon/${id}`
 
-    console.log(`Pokémon obtido: ${data.name}`)
-    getPokemon('https://pokeapi.co/api/v2/pokemon/squirtle', (error, data) => {
-      if (error) {
-        console.log(error)
-        return
-      }
+const bulbasaur = getPokemonURL('1')
+const charmander = getPokemonURL('4')
+const squirtle = getPokemonURL('7')
 
-      console.log(`Pokémon obtido: ${data.name}`)
-    })
+getPokemon(bulbasaur, (error, data) => {
+  logResquestPokemon(error, data)
+  getPokemon(charmander, (error, data) => {
+    logResquestPokemon(error, data)
+    getPokemon(squirtle, logResquestPokemon)
   })
 })
 
 
-
 /*
   02
-
+ 
   - Há algumas etapas, implementamos o método some, do zero;
   - Neste exercício, seu desafio será criar o método map, do zero;
   - Implemente uma função "map" que possui a mesma funcionalidade do método  
@@ -85,19 +77,21 @@ getPokemon('https://pokeapi.co/api/v2/pokemon/bulbasaur', (error, data) => {
 */
 
 const map = (array, callback) => {
-  let arrayMap = []
+  let newArray = []
+
   array.forEach(item => {
-    arrayMap.push(callback(item))
+    let itemModified = callback(item)
+    newArray.push(itemModified)
   })
 
-  return arrayMap
+  return newArray
 }
 
 console.log(map([3, 54, 7], number => number * 3))
 
 /*
   03
-
+ 
   - Descomente o console.log abaixo e faça o this do método referenciar o 
     objeto person.
 */
@@ -111,7 +105,7 @@ console.log(person.getName())
 
 /*
   04
-
+ 
   - Descomente a 2ª const abaixo e salve este arquivo;
   - Um erro será exibido no console;
   - Faça as duas const x coexistirem, sem modificar o nome de qualquer uma 
@@ -128,7 +122,7 @@ console.log(x, getX())
 
 /*
   05
-
+ 
   - O código abaixo está funcionando. Refatore-o da forma mais concisa que você 
     conseguir.
 */
@@ -139,7 +133,7 @@ console.log(getFullName({ firstName: 'Afonso', lastName: 'Solano' }))
 
 /*
   06
-
+ 
   - Crie uma função chamada 'convertToHex', que recebe o nome de uma cor por 
     parâmetro. Exemplo: 'red';
   - Escolha 5 cores que serão convertidas do nome da cor para o seu
@@ -152,20 +146,17 @@ console.log(getFullName({ firstName: 'Afonso', lastName: 'Solano' }))
 */
 
 const convertToHex = color => {
-  switch (color) {
-    case 'vermelho':
-      return `O hexadecimal para a ${color} é #ff0000`
-    case 'azul':
-      return `O hexadecimal para a ${color} é #0000ff`
-    case 'verde':
-      return `O hexadecimal para a ${color} é #00ff00`
-    case 'amarelo':
-      return `O hexadecimal para a ${color} é #Ffff00`
-    case 'roxo':
-      return `O hexadecimal para a ${color} é #993399`
-    default:
-      return `Não temos o equivalente hexadecimal para ${color}`
+  const colors = {
+    vermelho: '#ff0000',
+    azul: '#0000ff',
+    verde: '#00ff00',
+    amarelo: '#Ffff00',
+    roxo: '#993399'
   }
+
+  return colors[color]
+    ? `O hexadecimal para a cor ${color} é ${colors[color]}`
+    : `Não temos o equivalente hexadecimal para ${color}`
 }
 
 console.log(convertToHex('azul'))
@@ -179,7 +170,7 @@ console.log(convertToHex('marrom'))
 
 /*
   07
-
+ 
   - Através do array abaixo, gere um objeto com a frequência de idades das 
     pessoas;
   - Ou seja, se o array contém 3 pessoas com 18 anos, o objeto gerado deve ter 
@@ -188,7 +179,7 @@ console.log(convertToHex('marrom'))
     diante.
   
   Resultado desejado: { 18: 3, 19: 2, 20: 1 }
-
+ 
   Dica: pesquise por Computed Property Names.
 */
 
@@ -201,9 +192,10 @@ const people = [
   { id: 73, name: 'Aline', age: 19, federativeUnit: 'Brasília' }
 ]
 
-const FrequencyAge = people.reduce((acc, person) => {
-  acc[person.age] = acc[person.age] + 1 || 1
+const ageFrenqueence = people.reduce((acc, { age }) => {
+  acc[age] = acc[age] + 1 || 1
   return acc
 }, {})
+console.log(ageFrenqueence)
 
-console.log(FrequencyAge)
+//{18: 3, 19: 2, 20: 1}
