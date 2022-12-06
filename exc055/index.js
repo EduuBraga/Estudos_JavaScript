@@ -1,4 +1,4 @@
-const getTodos = url => new Promise((resolve, reject) => {
+const getPokemon = url => new Promise((resolve, reject) => {
   const request = new XMLHttpRequest()
 
   request.addEventListener('readystatechange', () => {
@@ -19,9 +19,19 @@ const getTodos = url => new Promise((resolve, reject) => {
   request.send()
 })
 
-getTodos("https://pokeapi.co/api/v2/pokemon/1")
-  .then(data => console.log(data.name))
+getPokemon("https://pokeapi.co/api/v2/pokemon/1")
+  .then(bulbasaur => {
+    console.log(bulbasaur)
+    return getPokemon("https://pokeapi.co/api/v2/pokemon/4")
+  })
+  .then(charmander => {
+    console.log(charmander)
+    return getPokemon('https://pokeapi.co/api/v2/pokemon/7')
+  })
+  .then(squirtle => console.log(squirtle))
   .catch(error => console.log(error))
+
+
 
 
 const people = [
@@ -42,9 +52,13 @@ const getPerson = personName => new Promise((resolve, reject) => {
 })
 
 getPerson('Eduardo')
-  .then(data => console.log(data))
-  .catch(error => console.log(error))
-
-getPerson('yasmim')
-  .then(data => console.log(data))
+  .then(eduardo => {
+    console.log(eduardo)
+    return getPerson('Chalme')
+  })
+  .then(chalme => {
+    console.log(chalme)
+    return getPerson('Yasmim')
+  })
+  .then(yasmim => console.log(yasmim))
   .catch(error => console.log(error))
