@@ -27,7 +27,13 @@ const reverseArray = array => {
   return newArray
 }
 
+const reverseArrayTwo = array => [array[2], array[0]]
+
+const swap = ([fist, , third]) => [third, fist]
+
+console.log(swap([5, 7, 1]))
 console.log(reverseArray([5, 7, 1]))
+console.log(reverseArrayTwo([5, 7, 1]))
 
 
 /*
@@ -45,8 +51,9 @@ const topics = [
 
 const { name } = topics.filter(item => item.id === 3)[0]
 const { name: nameTwo } = topics[2]
+const [, , { name: nameThree }] = topics
 
-console.log(name, nameTwo)
+console.log(name, nameTwo, nameThree)
 
 /*
   04
@@ -59,8 +66,10 @@ console.log(name, nameTwo)
 const colors = ['#FF00FF', ['#FF0D0D', '#0AFA00', '#011EFA'], '#7BF0FF']
 
 const [red, green, blue] = colors[1]
+const [, [red2, green2, blue2]] = colors
 
 console.log(red, green, blue)
+console.log(red2, green2, blue2)
 
 /*
   05
@@ -76,10 +85,11 @@ console.log(red, green, blue)
     - Faça a função retornar "Olá, meu nome é [NOME]!".
 */
 
-const greet = (obj, stg) => {
-  const { [stg]: name = 'Desconhecido' } = obj
+const greet = (obj, propsDinamic) => {
+  const { [propsDinamic]: name = 'Desconhecido'} = obj
   return `Olá, meu nome é ${name}`
 }
 
 console.log(greet({ name: 'Eduardo' }, 'name'))
+console.log(greet({ age: 19 }, 'age'))
 console.log(greet({}, 'personName'))
