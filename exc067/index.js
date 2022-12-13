@@ -28,8 +28,8 @@ console.log(valueParsing('i'))
 const input = document.querySelector('[data-js="input"]')
 
 input.addEventListener('input', event => {
-  const number = new Number(event.target.value)
-  console.log(number.valueOf())
+  console.log(event.target.value, typeof event.target.value)
+  console.log(event.target.valueAsNumber, typeof event.target.valueAsNumber)
 })
 
 /*
@@ -56,21 +56,11 @@ const multiplyFive = num => num * 5
 
 const addTen = num => num + 10
 
-const combineOperations = (initialValue, functions) => {
-  let value = initialValue
-
-  functions.forEach(func => {
-    value = func(value)
-  });
-
-  return value
-}
-
-const combineOperationsTwo = (initialValue, functions) => functions
-  .reduce((acc, func) => func(acc), initialValue)
+const combineOperations = (initialValue, functions) =>
+  functions.reduce((acc, func) => func(acc), initialValue)
 
 console.log(combineOperations(0, [add100, divByFive, multiplyByThree]))
-console.log(combineOperationsTwo(0, [divByFive, multiplyFive, addTen]))
+console.log(combineOperations(0, [divByFive, multiplyFive, addTen]))
 
 /*
   04
@@ -112,9 +102,9 @@ const albumHousesOfTheHoly = {
 }
 
 const searchAlbum = albumParam => {
-  const albumExist = albums.find(album => album.id === albumParam.id)
+  const albumExist = albums.some(album => album.id === albumParam.id)
 
-  if (albumExist){
+  if (albumExist) {
     console.log(`${JSON.stringify(albumParam)} existe no array albums.`)
     return
   }
@@ -142,17 +132,55 @@ const obj = {
   prop8: { a: 'x', b: 'y' },
 }
 
-const obj1 = {...obj}
 
-localStorage.setItem('obj2', JSON.stringify(obj))
-const obj2 = JSON.parse(localStorage.getItem('obj2'))
+const objCopy = {
+  ...obj,
+  prop6: [
+    obj.prop6[0],
+    { ...obj.prop6[1] }
+  ],
+  prop8: { ...obj.prop8 }
+}
 
-console.log(obj.prop1 = '1', obj)
-console.log(obj1.prop1 = '2', obj1)
-console.log(obj2.prop1 = '3', obj2)
+obj.prop8 = { a: '1', b: '2' }
+
+console.log(obj, objCopy)
+console.log(obj.prop8.a === objCopy.prop8.a)
+
+
+
+const persons = {
+  person1: { name: 'eduardo', age: 19 },
+  person2: { name: 'chalme', age: 39 },
+  ages: [19, 39]
+}
+
+const personsCopy = {
+  ...persons,
+  person1: { ...persons.person1 },
+  person2: { ...persons.person2 },
+  ages: [...persons.ages]
+}
+
+persons.person1.name = 'Eduardo Braga'
+
+console.log(persons, personsCopy)
 
 /*
-  06
+{person1: {…}, person2: {…}, ages: Array(2)}
+ages : [19, 39]
+person1 : {name: 'Eduardo Braga', age: 19}
+person2 : {name: 'chalme', age: 39}
+
+
+{person1: {…}, person2: {…}, ages: Array(2)}
+ages : (2) [19, 39]
+person1 : {name: 'Eduardo Braga', age: 19}
+person2 : {name: 'chalme', age: 39}
+*/
+
+/*
+06
 
   - Implemente uma função que cria e retorna um elemento HTML;
   - Ela deve receber o nome do elemento HTML a ser criado e um objeto com os 
@@ -163,24 +191,19 @@ console.log(obj2.prop1 = '3', obj2)
 */
 
 const createELementHTML = (tag, attrs, text) => {
-  const arrayAttributes = Object.entries(attrs)
-  let attributes = ''
+  const element = document.createElement(tag)
+  const arrayAsAttributes = Object.entries(attrs)
 
-  arrayAttributes.forEach(attr => {
-    let key = attr[0]
-    let value = attr[1]
-
-    attributes += ` ${key}="${value}"`
-  });
-
-  const element = `<${tag}${attributes}> ${text} </${tag}>`
+  arrayAsAttributes.forEach(([key, value]) => element.setAttribute(key, value))
+  element.textContent = text
 
   return element
 }
 
-const p = createELementHTML('p', {class: 'title', id: 'paragraph'}, 'Olá, mundo!')
+const p = createELementHTML('p', { class: 'title', id: 'paragraph' }, 'Olá, mundo!')
 
-document.querySelector('body').innerHTML = p
+console.log(p)
+
 
 /*
   07
