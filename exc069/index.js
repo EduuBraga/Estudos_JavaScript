@@ -164,20 +164,20 @@ myForEach(oddNumbers, (item, index, array) => {
       1º slide, o slide anterior deve ser exibido.
 */
 
-const itemsCarrosel = document.querySelectorAll('.carousel__item')
+const itemsCarrosel = document.querySelectorAll('[data-js="carousel__item"]')
 const buttonNext = document.querySelector('[data-js="carousel__button--next"]')
 const buttonPrev = document.querySelector('[data-js="carousel__button--prev"]')
 let indexCurrentImg = 0
 
 const toggleCurrentImg = action => {
-  const lengthImgs = itemsCarrosel.length
+  const lastIndex = itemsCarrosel.length - 1
 
   if (action === 'next') {
-    const ExceededLastIndex = indexCurrentImg + 1 >= lengthImgs
+    const ExceededLastIndex = indexCurrentImg + 1 >= itemsCarrosel.length
     ExceededLastIndex ? indexCurrentImg = 0 : indexCurrentImg++
   } else {
     const indexNegative = indexCurrentImg - 1 === -1
-    indexNegative ? indexCurrentImg = lengthImgs : indexCurrentImg--
+    indexNegative ? indexCurrentImg = lastIndex : indexCurrentImg--
   }
 }
 
@@ -187,9 +187,9 @@ const changeImgCarousel = action => {
   itemsCarrosel.forEach(item => {
     item.classList.remove('carousel__item--visible')
     item.classList.add('.carousel__item--hidden')
-
-    itemsCarrosel[indexCurrentImg].classList.add('carousel__item--visible')
   })
+
+  itemsCarrosel[indexCurrentImg].classList.add('carousel__item--visible')
 }
 
 buttonNext.addEventListener('click', _ => changeImgCarousel('next'))
