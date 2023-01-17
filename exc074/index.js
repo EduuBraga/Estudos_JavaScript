@@ -201,24 +201,32 @@ const clock = clockRefactor({ template: 'h:m:s', precision: 1000 })
         - download, com o valor 'table.csv'.
 */
 
-const buttonDownloadCSV = document.querySelector('[data-js="export-table-btn"]')
-const trs = document.querySelectorAll('tr')
+const exportCSV = document.querySelector('[data-js="export-table-btn"]')
+const tableRows = document.querySelectorAll('tr')
 
-buttonDownloadCSV.addEventListener('click', event => {
-  const collectionChildrensTableTrs = Array.from(trs)
-    .map(array => Array.from(array))
+const getTextContent = ({ textContent }) => textContent
 
-  const stringCSV = collectionChildrensTableTrs
-    .map(arrayCurrent => arrayCurrent.join(','))
-    .join('\n')
+const getStringWithCommas = ({ cells }) => Array.from(cells)
+  .map(getTextContent)
+  .join(',')
 
-  event.target.setAttribute(
-    'href',
-    `data:text/csvcharset=utf-8,${encodeURIComponent(stringCSV)}`
-  )
+const createCSVString = () => Array.from(tableRows)
+  .map(getStringWithCommas)
+  .join('\n')
 
-  event.target.setAttribute('download', 'table.csv')
-})
+const setCSVDownload = CSVString => {
+  const CSVURI = `data:text/csvcharset=utf-8,${encodeURIComponent(CSVString)}`
+
+  exportCSV.setAttribute('href', CSVURI)
+  exportCSV.setAttribute('download', 'table.csv')
+}
+
+const downloadTableCSV = () => {
+  const CSVString = createCSVString()
+  setCSVDownload(CSVString)
+}
+
+exportCSV.addEventListener('click', downloadTableCSV)
 
 /*
   06
@@ -233,7 +241,7 @@ buttonDownloadCSV.addEventListener('click', event => {
     essa aplicação.
 */
 
-
+//NOP
 
 /*
   07
