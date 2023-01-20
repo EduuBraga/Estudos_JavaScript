@@ -226,7 +226,7 @@ const downloadTableCSV = () => {
   setCSVDownload(CSVString)
 }
 
-exportCSV.addEventListener('click', downloadTableCSV)
+// exportCSV.addEventListener('click', downloadTableCSV)
 
 /*
   06
@@ -284,3 +284,89 @@ exportCSV.addEventListener('click', downloadTableCSV)
   PS: o desafio aqui é você implementar essa aplicação sozinho(a), antes 
   de ver as próximas aulas, ok? =)
 */
+
+const selectCurrencyOne = document.querySelector('[data-js="currency-one"]')
+const selectCurrencyTwo = document.querySelector('[data-js="currency-two"]')
+const convertedValue = document.querySelector('[data-js="converted-value"]')
+const currencyOneTimes = document.querySelector('[data-js="currency-one-times"]')
+const conversionPrecision = document.querySelector('[data-js="conversion-precision"]')
+
+const getDataAPIConversion = async () => {
+  const key = 'b8f3dbec1885dd8166c81456'
+  const apiURL = `https://v6.exchangerate-api.com/v6/${key}/latest/USD`
+
+  const res = await fetch(apiURL).then(res => res.json())
+
+  if (res.result === 'success')
+    return res
+  else
+    throw 'Houve um erro'
+}
+
+const formatNumber = (number, currency = 'BRL') => number
+  .toLocaleString('pt-BR', {
+    style: 'currency',
+    currency: currency,
+    minimumFractionDigits: 2
+  });
+
+const changeValueCurrencyOneTimes = () => {
+  const calc = selectCurrencyOne.value * selectCurrencyTwo.value
+  const textContent = selectCurrencyTwo
+    .options[selectCurrencyTwo.selectedIndex]
+    .text;
+
+  const contentConvertedValue = formatNumber(calc, textContent)
+
+  convertedValue.innerText = contentConvertedValue
+}
+
+const changeValueConversionPrecision = () => {
+  const valueCurrencyOne = Number(selectCurrencyOne.value)
+  const valueCurrencyTwo = Number(selectCurrencyTwo.value)
+
+  const textCurrencyOne = selectCurrencyOne
+    .options[selectCurrencyOne.selectedIndex].text;
+  const textCurrencyTwo = selectCurrencyTwo
+    .options[selectCurrencyTwo.selectedIndex].text;
+
+  const formattedCurrencyOne = formatNumber(valueCurrencyOne, textCurrencyOne)
+  const formattedCurrencyTwo = formatNumber(valueCurrencyTwo, textCurrencyTwo)
+
+  conversionPrecision.innerText =
+    `${formattedCurrencyOne} = ${formattedCurrencyTwo}`
+}
+
+
+currencyOneTimes.addEventListener('input', changeValueCurrencyOneTimes)
+selectCurrencyOne.addEventListener('change', changeValueCurrencyOneTimes)
+selectCurrencyTwo.addEventListener('change', changeValueCurrencyOneTimes)
+
+selectCurrencyOne.addEventListener('change', changeValueConversionPrecision)
+selectCurrencyTwo.addEventListener('change', changeValueConversionPrecision)
+
+window.addEventListener('DOMContentLoaded', async () => {
+  const dataApi = await getDataAPIConversion()
+
+  const currencys = Object.entries(dataApi.conversion_rates)
+
+  currencys.forEach(currency => {
+    const nameCurrency = currency[0]
+    const valueCurrency = currency[1]
+
+    selectCurrencyOne.innerHTML +=
+      `<option value="${valueCurrency}" ${nameCurrency === "USD" ? 'selected' : ''}>
+      ${nameCurrency}
+    </option>`
+
+    selectCurrencyTwo.innerHTML +=
+      `<option value="${valueCurrency}" ${nameCurrency === "BRL" ? 'selected' : ''}>
+      ${nameCurrency}
+    </option>`
+  });
+
+  const calc = currencyOneTimes.value * selectCurrencyTwo.value
+
+  convertedValue.innerText = formatNumber(calc)
+  changeValueConversionPrecision()
+})
